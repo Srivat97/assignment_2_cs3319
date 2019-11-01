@@ -1,0 +1,32 @@
+SHOW DATABASES;
+
+DROP DATABASE IF EXISTS ssrini3assign2db;
+CREATE DATABASE ssrini3assign2db;
+
+USE ssrini3assign2db;
+GRANT USAGE ON *.* TO 'ta'@'localhost';
+DROP USER 'ta'@'localhost';
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319';
+GRANT ALL PRIVLEGES ON ssrini3assign2db.* TO 'ta'@'localhost';
+FLUSH PRIVILEGES;
+SHOW TABLES;
+
+CREATE TABLE Doctor(LicenseNum CHAR(4) NOT NULL, FirstName VARCHAR(20), LastName VARCHAR(20), LicenseDate DATE, Specialty VARCHAR(30), PRIMARY KEY (LicenseNum));
+
+CREATE TABLE Hospital(HospitalCode CHAR(3) NOT NULL, HospitalName  VARCHAR(20), City  VARCHAR(20), Province VARCHAR(2), BedCount INTEGER, StartDate DATE, PRIMARY KEY (HospitalCode));
+
+CREATE TABLE Patient(OHIPNum INTEGER NOT NULL, FirstName VARCHAR(20), LastName VARCHAR(20), PRIMARY KEY(OHIPNum));
+
+CREATE TABLE PatientAssignment(PatientID INTEGER NOT NULL, DoctorID CHAR(4) NOT NULL, PRIMARY KEY (PatientID, DoctorID), FOREIGN KEY (PatientID) REFERENCES Patient(OHIPNum), 
+FOREIGN KEY (DoctorID) REFERENCES Doctor(LicenseNum) ON DELETE CASCADE);
+
+ALTER TABLE Doctor ADD COLUMN WorkingHospital CHAR(3); 
+
+ALTER TABLE Doctor ADD FOREIGN KEY (WorkingHospital) REFERENCES Hospital(HospitalCode); 
+
+ALTER TABLE Hospital ADD COLUMN HeadDoctor CHAR(4);
+
+ALTER TABLE Hospital ADD FOREIGN KEY (HeadDoctor) REFERENCES Doctor(LicenseNum);
+
+SHOW TABLES;
+
