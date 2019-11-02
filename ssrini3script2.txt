@@ -92,6 +92,9 @@ SELECT * FROM Patient;
 
 SELECT * FROM PatientAssignment;
 
-UPDATE PatientAssignment AS PD, Doctor (SELECT * FROM PD,Doctor WHERE PD.LicenseNum = Doctor.LicenseNum) SET PD.LicenseNum = 'HT45' WHERE Doctor.LastName = "Spock"; 
+UPDATE PatientAssignment as PD 
+SET PD.DoctorID = (SELECT LicenseNum FROM Doctor WHERE Doctor.LastName = "Clooney")
+WHERE PD.DoctorID IN (SELECT LicenseNum FROM Doctor WHERE Doctor.LastName = "Spock"); 
+
 
 SELECT * FROM PatientAssignment;
