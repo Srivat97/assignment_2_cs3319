@@ -48,7 +48,7 @@ SELECT * FROM PatientAssignment;
 INSERT INTO PatientAssignment (PatientID, DoctorID)
 VALUES ('110112113', 'GD56');
 INSERT INTO PatientAssignment (PatientID, DoctorID)
-VALUES ('444555666', ' HT45');
+VALUES ('444555666', 'HT45');
 INSERT INTO PatientAssignment (PatientID, DoctorID)
 VALUES ('444555666', 'JK78');
 INSERT INTO PatientAssignment (PatientID, DoctorID)
