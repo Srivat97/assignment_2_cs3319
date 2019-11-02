@@ -1,3 +1,5 @@
+USE ssrini3assign2db;
+
 -- Query 1
 SELECT LastName 
 FROM Patient;
@@ -82,4 +84,3 @@ WHERE Doctor.LicenseNum IN (SELECT DoctorID
                             GROUP BY DoctorID
                             HAVING COUNT(*) > 1);
 
-                            
