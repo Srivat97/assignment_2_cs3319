@@ -1,0 +1,458 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SELECT * FROM Patient
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+LOAD DATA LOCAL INFILE './loaddatafall2019.txt' INTO TABLE Patient
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+--------------
+
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Deleted: 0  Skipped: 0  Warnings: 0
+
+--------------
+SELECT * FROM Patient
+--------------
+
++-----------+-----------+----------+
+| OHIPNum   | FirstName | LastName |
++-----------+-----------+----------+
+| 110112113 | Bill      | Gellar   |
+| 111222111 | Suzi      | Bing     |
+| 111222333 | Jon       | Green    |
+| 333444555 | Colleen   | Gellar   |
+| 444555666 | Sean      | Gellar   |
+| 667766777 | Scotty    | Bing     |
++-----------+-----------+----------+
+6 rows in set (0.00 sec)
+
+--------------
+INSERT INTO Patient (OHIPNum, FirstName, LastName) 
+VALUES ('764329777', 'Srivatsan', 'Srinivasan')
+--------------
+
+Query OK, 1 row affected (0.02 sec)
+
+--------------
+SELECT * FROM Patient
+--------------
+
++-----------+-----------+------------+
+| OHIPNum   | FirstName | LastName   |
++-----------+-----------+------------+
+| 110112113 | Bill      | Gellar     |
+| 111222111 | Suzi      | Bing       |
+| 111222333 | Jon       | Green      |
+| 333444555 | Colleen   | Gellar     |
+| 444555666 | Sean      | Gellar     |
+| 667766777 | Scotty    | Bing       |
+| 764329777 | Srivatsan | Srinivasan |
++-----------+-----------+------------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM Doctor
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('RD34', 'Bernie', 'Kavorikian', '1980-09-09', 'Urologist')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('GD56', 'Joey', 'Shabado', '1960-06-24',  'Podiatrist')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('HT45', 'Ross', 'Clooney', '1987-06-20',  'Surgeon')
+--------------
+
+Query OK, 1 row affected (0.02 sec)
+
+--------------
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('YT67', 'Ben', 'Spock', '1955-02-20', 'Pediatrician')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('JK78', 'Mandy', 'Webster', '1990-08-08', 'Surgeon')
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('SE66', 'Colleen', 'Aziz', '1989-08-24', 'Surgeon')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('LI99', 'Elizabeth', 'Blackwell', '1951-04-17', 'Physician')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+SELECT * FROM Doctor
+--------------
+
++------------+-----------+------------+-------------+--------------+-----------------+
+| LicenseNum | FirstName | LastName   | LicenseDate | Specialty    | WorkingHospital |
++------------+-----------+------------+-------------+--------------+-----------------+
+| GD56       | Joey      | Shabado    | 1960-06-24  | Podiatrist   | NULL            |
+| HT45       | Ross      | Clooney    | 1987-06-20  | Surgeon      | NULL            |
+| JK78       | Mandy     | Webster    | 1990-08-08  | Surgeon      | NULL            |
+| LI99       | Elizabeth | Blackwell  | 1951-04-17  | Physician    | NULL            |
+| RD34       | Bernie    | Kavorikian | 1980-09-09  | Urologist    | NULL            |
+| SE66       | Colleen   | Aziz       | 1989-08-24  | Surgeon      | NULL            |
+| YT67       | Ben       | Spock      | 1955-02-20  | Pediatrician | NULL            |
++------------+-----------+------------+-------------+--------------+-----------------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM Hospital
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+INSERT INTO Hospital (HospitalCode, HospitalName, City, Province, BedCount, StartDate, HeadDoctor)
+VALUES ('BBC', 'St. Joseph', 'London', 'On', 1000, '1999-09-10', 'GD56')
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO Hospital (HospitalCode, HospitalName, City, Province, BedCount, StartDate, HeadDoctor)
+VALUES ('ABC', 'Victoria', 'London', 'On', 1600, '1994-12-05', 'SE66')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO Hospital (HospitalCode, HospitalName, City, Province, BedCount, StartDate, HeadDoctor)
+VALUES ('DDE', 'Victoria', 'Victoria', 'BC', 1200, '1997-12-07', 'YT67')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+SELECT * FROM Hospital
+--------------
+
++--------------+--------------+----------+----------+----------+------------+------------+
+| HospitalCode | HospitalName | City     | Province | BedCount | StartDate  | HeadDoctor |
++--------------+--------------+----------+----------+----------+------------+------------+
+| ABC          | Victoria     | London   | On       |     1600 | 1994-12-05 | SE66       |
+| BBC          | St. Joseph   | London   | On       |     1000 | 1999-09-10 | GD56       |
+| DDE          | Victoria     | Victoria | BC       |     1200 | 1997-12-07 | YT67       |
++--------------+--------------+----------+----------+----------+------------+------------+
+3 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM PatientAssignment
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('110112113', 'GD56')
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('444555666', 'HT45')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('444555666', 'JK78')
+--------------
+
+Query OK, 1 row affected (0.02 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('111222333', 'JK78')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('111222333', 'SE66')
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('111222333', 'YT67')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('333444555', 'GD56')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('667766777', 'YT67')
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('667766777', 'JK78')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('667766777', 'GD56')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('111222111', 'YT67')
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('764329777', 'RD34')
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+SELECT * FROM PatientAssignment
+--------------
+
++-----------+----------+
+| PatientID | DoctorID |
++-----------+----------+
+| 110112113 | GD56     |
+| 333444555 | GD56     |
+| 667766777 | GD56     |
+| 444555666 | HT45     |
+| 111222333 | JK78     |
+| 444555666 | JK78     |
+| 667766777 | JK78     |
+| 764329777 | RD34     |
+| 111222333 | SE66     |
+| 111222111 | YT67     |
+| 111222333 | YT67     |
+| 667766777 | YT67     |
++-----------+----------+
+12 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM Doctor
+--------------
+
++------------+-----------+------------+-------------+--------------+-----------------+
+| LicenseNum | FirstName | LastName   | LicenseDate | Specialty    | WorkingHospital |
++------------+-----------+------------+-------------+--------------+-----------------+
+| GD56       | Joey      | Shabado    | 1960-06-24  | Podiatrist   | NULL            |
+| HT45       | Ross      | Clooney    | 1987-06-20  | Surgeon      | NULL            |
+| JK78       | Mandy     | Webster    | 1990-08-08  | Surgeon      | NULL            |
+| LI99       | Elizabeth | Blackwell  | 1951-04-17  | Physician    | NULL            |
+| RD34       | Bernie    | Kavorikian | 1980-09-09  | Urologist    | NULL            |
+| SE66       | Colleen   | Aziz       | 1989-08-24  | Surgeon      | NULL            |
+| YT67       | Ben       | Spock      | 1955-02-20  | Pediatrician | NULL            |
++------------+-----------+------------+-------------+--------------+-----------------+
+7 rows in set (0.00 sec)
+
+--------------
+UPDATE Doctor SET Doctor.WorkingHospital = 'BBC' WHERE Doctor.LicenseNum = 'RD34'
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE Doctor SET Doctor.WorkingHospital = 'BBC' WHERE Doctor.LicenseNum = 'GD56'
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE Doctor SET Doctor.WorkingHospital = 'DDE' WHERE Doctor.LicenseNum = 'HT45'
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE Doctor SET Doctor.WorkingHospital = 'DDE' WHERE Doctor.LicenseNum = 'YT67'
+--------------
+
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE Doctor SET Doctor.WorkingHospital = 'BBC' WHERE Doctor.LicenseNum = 'JK78'
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE Doctor SET Doctor.WorkingHospital = 'ABC' WHERE Doctor.LicenseNum = 'SE66'
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+UPDATE Doctor SET Doctor.WorkingHospital = 'ABC' WHERE Doctor.LicenseNum = 'LI99'
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+SELECT * FROM Doctor
+--------------
+
++------------+-----------+------------+-------------+--------------+-----------------+
+| LicenseNum | FirstName | LastName   | LicenseDate | Specialty    | WorkingHospital |
++------------+-----------+------------+-------------+--------------+-----------------+
+| GD56       | Joey      | Shabado    | 1960-06-24  | Podiatrist   | BBC             |
+| HT45       | Ross      | Clooney    | 1987-06-20  | Surgeon      | DDE             |
+| JK78       | Mandy     | Webster    | 1990-08-08  | Surgeon      | BBC             |
+| LI99       | Elizabeth | Blackwell  | 1951-04-17  | Physician    | ABC             |
+| RD34       | Bernie    | Kavorikian | 1980-09-09  | Urologist    | BBC             |
+| SE66       | Colleen   | Aziz       | 1989-08-24  | Surgeon      | ABC             |
+| YT67       | Ben       | Spock      | 1955-02-20  | Pediatrician | DDE             |
++------------+-----------+------------+-------------+--------------+-----------------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM Patient
+--------------
+
++-----------+-----------+------------+
+| OHIPNum   | FirstName | LastName   |
++-----------+-----------+------------+
+| 110112113 | Bill      | Gellar     |
+| 111222111 | Suzi      | Bing       |
+| 111222333 | Jon       | Green      |
+| 333444555 | Colleen   | Gellar     |
+| 444555666 | Sean      | Gellar     |
+| 667766777 | Scotty    | Bing       |
+| 764329777 | Srivatsan | Srinivasan |
++-----------+-----------+------------+
+7 rows in set (0.00 sec)
+
+--------------
+UPDATE Patient SET Patient.LastName = 'Brown' WHERE Patient.OHIPNum = '111222111'
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+--------------
+SELECT * FROM Patient
+--------------
+
++-----------+-----------+------------+
+| OHIPNum   | FirstName | LastName   |
++-----------+-----------+------------+
+| 110112113 | Bill      | Gellar     |
+| 111222111 | Suzi      | Brown      |
+| 111222333 | Jon       | Green      |
+| 333444555 | Colleen   | Gellar     |
+| 444555666 | Sean      | Gellar     |
+| 667766777 | Scotty    | Bing       |
+| 764329777 | Srivatsan | Srinivasan |
++-----------+-----------+------------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM PatientAssignment
+--------------
+
++-----------+----------+
+| PatientID | DoctorID |
++-----------+----------+
+| 110112113 | GD56     |
+| 333444555 | GD56     |
+| 667766777 | GD56     |
+| 444555666 | HT45     |
+| 111222333 | JK78     |
+| 444555666 | JK78     |
+| 667766777 | JK78     |
+| 764329777 | RD34     |
+| 111222333 | SE66     |
+| 111222111 | YT67     |
+| 111222333 | YT67     |
+| 667766777 | YT67     |
++-----------+----------+
+12 rows in set (0.00 sec)
+
+--------------
+UPDATE PatientAssignment as PD 
+SET PD.DoctorID = (SELECT LicenseNum FROM Doctor WHERE Doctor.LastName = "Clooney")
+WHERE PD.DoctorID IN (SELECT LicenseNum FROM Doctor WHERE Doctor.LastName = "Spock")
+--------------
+
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+--------------
+SELECT * FROM PatientAssignment
+--------------
+
++-----------+----------+
+| PatientID | DoctorID |
++-----------+----------+
+| 110112113 | GD56     |
+| 333444555 | GD56     |
+| 667766777 | GD56     |
+| 111222111 | HT45     |
+| 111222333 | HT45     |
+| 444555666 | HT45     |
+| 667766777 | HT45     |
+| 111222333 | JK78     |
+| 444555666 | JK78     |
+| 667766777 | JK78     |
+| 764329777 | RD34     |
+| 111222333 | SE66     |
++-----------+----------+
+12 rows in set (0.00 sec)
+
+Bye
