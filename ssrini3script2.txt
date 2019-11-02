@@ -2,7 +2,7 @@ USE ssrini3assign2db;
 
 SELECT * FROM Patient;
 
-LOAD DATA INFILE './loaddatafall2019.txt' INTO TABLE Patient
+LOAD DATA LOCAL INFILE './loaddatafall2019.txt' INTO TABLE Patient
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n';
 
@@ -16,19 +16,19 @@ SELECT * FROM Patient;
 SELECT * FROM Doctor;
 
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
-VALUES ('RD34', 'Bernie', 'Kavorikian', '1980-09-09', Urologist);
+VALUES ('RD34', 'Bernie', 'Kavorikian', '1980-09-09', 'Urologist');
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
-VALUES ('GD56', 'Joey', 'Shabado', '1960-06-24',  Podiatrist);
+VALUES ('GD56', 'Joey', 'Shabado', '1960-06-24',  'Podiatrist');
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
-VALUES ('HT45', 'Ross', 'Clooney', '1987-06-20',  Surgeon);
+VALUES ('HT45', 'Ross', 'Clooney', '1987-06-20',  'Surgeon');
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
-VALUES ('YT67', 'Ben', 'Spock', '1955-02-20', Pediatrician);
+VALUES ('YT67', 'Ben', 'Spock', '1955-02-20', 'Pediatrician');
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
-VALUES ('JK78', 'Mandy', 'Webster', '1990-08-08', Surgeon);
+VALUES ('JK78', 'Mandy', 'Webster', '1990-08-08', 'Surgeon');
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
-VALUES ('SE66', 'Colleen', 'Aziz', '1989-08-24', Surgeon);
+VALUES ('SE66', 'Colleen', 'Aziz', '1989-08-24', 'Surgeon');
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
-VALUES ('LI99', 'Elizabeth', 'Blackwell', '1951-04-17', Physician);
+VALUES ('LI99', 'Elizabeth', 'Blackwell', '1951-04-17', 'Physician');
 
 SELECT * FROM Doctor;
 
