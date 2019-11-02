@@ -1,0 +1,85 @@
+-- Query 1
+SELECT LastName 
+FROM Patient;
+
+-- Query 2
+SELECT DISTINCT LastName 
+FROM Patient;
+
+-- Query 3
+SELECT * 
+FROM Doctor 
+ORDER BY LastName ASC;
+
+-- Query 4
+SELECT HospitalCode, HospitalName
+FROM Hospital
+WHERE BedCount > 1500;
+
+-- Query 5
+SELECT Doctor.LastName, Doctor.FirstName 
+FROM Doctor
+INNER JOIN Hospital
+ON Doctor.WorkingHospital = Hospital.HospitalCode
+WHERE Hospital.HospitalName = 'St. Joseph';
+
+-- Query 6
+SELECT FirstName, LastName
+FROM Patient
+WHERE Patient.LastName = '[G]%';
+
+-- Query 7
+SELECT Patient.FirstName, Patient.LastName
+FROM PatientAssignment AS PD
+INNER JOIN Doctor
+ON PD.DoctorID = Doctor.LicenseNum
+INNER JOIN Patient
+ON PD.PatientID = Patient.OHIPNum
+WHERE Doctor.LastName = 'Clooney';
+
+-- Query 8
+SELECT Hospital.HospitalName, Hospital.City, Doctor.LastName
+FROM Hospital
+INNER JOIN Doctor
+ON Hospital.HeadDoctor = Doctor.LicenseNum;
+
+-- Query 9
+SELECT SUM(BedCount) AS "Total Number of Beds For All Hospitals"
+FROM Hospital;
+
+-- Query 10
+SELECT Patient.FirstName, Doctor.FirstName
+FROM PatientAssignment AS PD
+INNER JOIN Doctor
+ON PD.DoctorID = Doctor.LicenseNum
+INNER JOIN Patient
+ON PD.PatientID = Patient.OHIPNum
+WHERE Doctor.LicenseNum IN (SELECT Doctor.LicenseNum
+                            FROM Doctor 
+                            INNER JOIN Hospital
+                            ON Doctor.LicenseNum = Hospital.HeadDoctor);
+
+-- Query 11
+SELECT Doctor.LastName, Doctor.FirstName
+FROM Doctor
+INNER JOIN Hospital
+ON Doctor.WorkingHospital = Hospital.HospitalCode
+WHERE (Doctor.Specialty = 'Surgeon' AND Hospital.HospitalName = 'Victoria');
+
+-- Query 12
+SELECT Doctor.FirstName
+FROM Doctor
+WHERE Doctor.LicenseNum NOT IN (SELECT Doctor.LicenseNum
+                                FROM Doctor
+                                INNER JOIN PatientAssignment AS PD
+                                ON PD.DoctorID = Doctor.LicenseNum);
+
+-- Query 13
+SELECT Doctor.LastName, Doctor.FirstName
+FROM Doctor
+WHERE Doctor.LicenseNum IN (SELECT DoctorID
+                            FROM PatientAssignment AS PD
+                            GROUP BY DoctorID
+                            HAVING COUNT(*) > 1);
+
+                            
