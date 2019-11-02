@@ -1,0 +1,97 @@
+USE ssrini3assign2db;
+
+SELECT * FROM Patient;
+
+LOAD DATA INFILE './loaddatafall2019.txt' INTO TABLE Patient
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n';
+
+SELECT * FROM Patient;
+
+INSERT INTO Patient (OHIPNum, FirstName, LastName) 
+VALUES ('764329777', 'Srivatsan', 'Srinivasan');
+
+SELECT * FROM Patient;
+
+SELECT * FROM Doctor;
+
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('RD34', 'Bernie', 'Kavorikian', '1980-09-09', Urologist);
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('GD56', 'Joey', 'Shabado', '1960-06-24',  Podiatrist);
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('HT45', 'Ross', 'Clooney', '1987-06-20',  Surgeon);
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('YT67', 'Ben', 'Spock', '1955-02-20', Pediatrician);
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('JK78', 'Mandy', 'Webster', '1990-08-08', Surgeon);
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('SE66', 'Colleen', 'Aziz', '1989-08-24', Surgeon);
+INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
+VALUES ('LI99', 'Elizabeth', 'Blackwell', '1951-04-17', Physician);
+
+SELECT * FROM Doctor;
+
+SELECT * FROM Hospital;
+
+INSERT INTO Hospital (HospitalCode, HospitalName, City, Province, BedCount, StartDate, HeadDoctor)
+VALUES ('BBC', 'St. Joseph', 'London', 'On', 1000, '1999-09-10', 'GD56');
+INSERT INTO Hospital (HospitalCode, HospitalName, City, Province, BedCount, StartDate, HeadDoctor)
+VALUES ('ABC', 'Victoria', 'London', 'On', 1600, '1994-12-05', 'SE66');
+INSERT INTO Hospital (HospitalCode, HospitalName, City, Province, BedCount, StartDate, HeadDoctor)
+VALUES ('DDE', 'Victoria', 'Victoria', 'BC', 1200, '1997-12-07', 'YT67');
+
+SELECT * FROM Hospital;
+
+SELECT * FROM PatientAssignment;
+
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('110112113', 'GD56');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('444555666', ' HT45');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('444555666', 'JK78');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('111222333', 'JK78');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('111222333', 'SE66');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('111222333', 'YT67');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('333444555', 'GD56');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('667766777', 'YT67');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('667766777', 'JK78');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('667766777', 'GD56');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('111222111', 'YT67');
+INSERT INTO PatientAssignment (PatientID, DoctorID)
+VALUES ('764329777', 'RD34');
+
+SELECT * FROM PatientAssignment;
+
+SELECT * FROM Doctor;
+
+UPDATE Doctor SET Doctor.WorkingHospital = 'BBC' WHERE Doctor.LicenseNum = 'RD34';
+UPDATE Doctor SET Doctor.WorkingHospital = 'BBC' WHERE Doctor.LicenseNum = 'GD56';
+UPDATE Doctor SET Doctor.WorkingHospital = 'DDE' WHERE Doctor.LicenseNum = 'HT45';
+UPDATE Doctor SET Doctor.WorkingHospital = 'DDE' WHERE Doctor.LicenseNum = 'YT67';
+UPDATE Doctor SET Doctor.WorkingHospital = 'BBC' WHERE Doctor.LicenseNum = 'JK78';
+UPDATE Doctor SET Doctor.WorkingHospital = 'ABC' WHERE Doctor.LicenseNum = 'SE66';
+UPDATE Doctor SET Doctor.WorkingHospital = 'ABC' WHERE Doctor.LicenseNum = 'LI99';
+
+SELECT * FROM Doctor;
+
+SELECT * FROM Patient;
+
+UPDATE Patient SET Patient.LastName = 'Brown' WHERE Patient.OHIPNum = '111222111';
+
+SELECT * FROM Patient;
+
+SELECT * FROM PatientAssignment;
+
+UPDATE PatientAssignment AS PD, Doctor (SELECT * FROM PD,Doctor WHERE PD.LicenseNum = Doctor.LicenseNum) SET PD.LicenseNum = 'HT45' WHERE Doctor.LastName = "Spock"; 
+
+SELECT * FROM PatientAssignment;
