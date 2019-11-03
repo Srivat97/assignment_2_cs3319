@@ -1,0 +1,50 @@
+-- connecting to the database
+USE ssrini3assign2db;
+
+-- the following deletion will not work because a few doctors who were licensed before
+-- 1965 are also head doctors of hospitals, so are referenced in the hospital table.
+-- Due to the reference, the doctors cannot be deleted. Their refrerences need to be deleted first.
+DELETE FROM Doctor
+WHERE Doctor.LicenseDate < '1965-01-01';
+
+-- creating a view
+CREATE VIEW ViewOne AS
+SELECT Patient.FirstName AS PatientFirstName, 
+Patient.LastName AS PatientLastName,
+Doctor.LastName AS DoctorLastName,
+Hospital.HospitalName
+FROM PatientAssignment AS PD
+INNER JOIN Doctor
+ON PD.DoctorID = Doctor.LicenseNum
+INNER JOIN Patient
+ON PD.PatientID = Patient.OHIPNum
+RIGHT OUTER JOIN Hospital
+ON PD.DoctorID = Hospital.HeadDoctor
+WHERE Doctor.LicenseNum IN (SELECT Doctor.LicenseNum
+                            FROM Doctor 
+                            INNER JOIN Hospital
+                            ON Doctor.LicenseNum = Hospital.HeadDoctor
+                            WHERE Hospital.StartDate > '1995-12-31');
+-- displaying the view
+SELECT * FROM ViewOne;
+
+
+SELECT * FROM Doctor;
+
+-- the treats table is the PatientAssignment table in this database 
+SELECT * FROM PatientAssignment;
+
+-- the following deletion will work. Clooney is a doctor that is only referenced in the 
+-- patient assignment table. Since we specified a delete cascade on the PatientAssignment table,
+-- all rows that reference clooney will be deleted as well in the PatientAssignment table in addition to
+-- the deletion in the Doctor table. 
+DELETE FROM Doctor
+WHERE Doctor.LastName = 'Clooney';
+
+SELECT * FROM Doctor;
+
+-- the following deletion will not work because Collen Aziz who is a surgeon
+-- is also a ead doctor of victoria hospital, so is referenced in the hospital table.
+-- Due to the reference, the doctors cannot be deleted. Their refrerences need to be deleted first.
+DELETE FROM Doctor
+WHERE Doctor.Specialty = 'Surgeon';

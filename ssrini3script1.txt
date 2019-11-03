@@ -17,15 +17,17 @@ CREATE TABLE Hospital(HospitalCode CHAR(3) NOT NULL, HospitalName  VARCHAR(20), 
 
 CREATE TABLE Patient(OHIPNum INTEGER NOT NULL, FirstName VARCHAR(20), LastName VARCHAR(20), PRIMARY KEY(OHIPNum));
 
+-- PatientAssignment table holds records of all patients and their doctors
+-- DELETE CASCADE emphasizes that if a doctor was deleted, then the corresponding patient assignment table deletes all records containing the deleted doctor 
 CREATE TABLE PatientAssignment(PatientID INTEGER NOT NULL, DoctorID CHAR(4) NOT NULL, PRIMARY KEY (PatientID, DoctorID), FOREIGN KEY (PatientID) REFERENCES Patient(OHIPNum), 
 FOREIGN KEY (DoctorID) REFERENCES Doctor(LicenseNum) ON DELETE CASCADE);
 
+-- adding hospital doctors work for as a foreign key from hospital table
 ALTER TABLE Doctor ADD COLUMN WorkingHospital CHAR(3); 
-
 ALTER TABLE Doctor ADD FOREIGN KEY (WorkingHospital) REFERENCES Hospital(HospitalCode); 
 
+-- adding head doctor of each hospital to the hospital table as a foreign key
 ALTER TABLE Hospital ADD COLUMN HeadDoctor CHAR(4);
-
 ALTER TABLE Hospital ADD FOREIGN KEY (HeadDoctor) REFERENCES Doctor(LicenseNum);
 
 SHOW TABLES;

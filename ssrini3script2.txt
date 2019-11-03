@@ -1,5 +1,7 @@
+-- connect to the database 
 USE ssrini3assign2db;
 
+-- load text file and insert records to the patient table
 SELECT * FROM Patient;
 
 LOAD DATA LOCAL INFILE './loaddatafall2019.txt' INTO TABLE Patient
@@ -8,11 +10,13 @@ LINES TERMINATED BY '\n';
 
 SELECT * FROM Patient;
 
+-- inserting my information to the patient table
 INSERT INTO Patient (OHIPNum, FirstName, LastName) 
 VALUES ('764329777', 'Srivatsan', 'Srinivasan');
 
 SELECT * FROM Patient;
 
+-- insert all the doctors, but not adding hospital yet (hospitals have not been created)
 SELECT * FROM Doctor;
 
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
@@ -32,6 +36,7 @@ VALUES ('LI99', 'Elizabeth', 'Blackwell', '1951-04-17', 'Physician');
 
 SELECT * FROM Doctor;
 
+-- adding hospitals and their corresponding head doctors
 SELECT * FROM Hospital;
 
 INSERT INTO Hospital (HospitalCode, HospitalName, City, Province, BedCount, StartDate, HeadDoctor)
@@ -43,6 +48,7 @@ VALUES ('DDE', 'Victoria', 'Victoria', 'BC', 1200, '1997-12-07', 'YT67');
 
 SELECT * FROM Hospital;
 
+-- adding patients and their assigned doctors
 SELECT * FROM PatientAssignment;
 
 INSERT INTO PatientAssignment (PatientID, DoctorID)
@@ -72,6 +78,7 @@ VALUES ('764329777', 'RD34');
 
 SELECT * FROM PatientAssignment;
 
+-- adding the hospitals doctors work for to the doctors table
 SELECT * FROM Doctor;
 
 UPDATE Doctor SET Doctor.WorkingHospital = 'BBC' WHERE Doctor.LicenseNum = 'RD34';
@@ -84,12 +91,14 @@ UPDATE Doctor SET Doctor.WorkingHospital = 'ABC' WHERE Doctor.LicenseNum = 'LI99
 
 SELECT * FROM Doctor;
 
+-- updating a single patients last name
 SELECT * FROM Patient;
 
 UPDATE Patient SET Patient.LastName = 'Brown' WHERE Patient.OHIPNum = '111222111';
 
 SELECT * FROM Patient;
 
+-- updating patients who have Spock as a doctor to Clooney 
 SELECT * FROM PatientAssignment;
 
 UPDATE PatientAssignment as PD 
