@@ -1,0 +1,145 @@
+Warning: Using a password on the command line interface can be insecure.
+ERROR 1451 (23000) at line 7: Cannot delete or update a parent row: a foreign key constraint fails (`ssrini3assign2db`.`Hospital`, CONSTRAINT `Hospital_ibfk_1` FOREIGN KEY (`HeadDoctor`) REFERENCES `Doctor` (`LicenseNum`))
+--------------
+DELETE FROM Doctor
+WHERE Doctor.LicenseDate < '1965-01-01'
+--------------
+
+--------------
+CREATE VIEW ViewOne AS
+SELECT Patient.FirstName AS PatientFirstName, 
+Patient.LastName AS PatientLastName,
+Doctor.LastName AS DoctorLastName,
+Hospital.HospitalName
+FROM PatientAssignment AS PD
+INNER JOIN Doctor
+ON PD.DoctorID = Doctor.LicenseNum
+INNER JOIN Patient
+ON PD.PatientID = Patient.OHIPNum
+RIGHT OUTER JOIN Hospital
+ON PD.DoctorID = Hospital.HeadDoctor
+WHERE Doctor.LicenseNum IN (SELECT Doctor.LicenseNum
+                            FROM Doctor 
+                            INNER JOIN Hospital
+                            ON Doctor.LicenseNum = Hospital.HeadDoctor
+                            WHERE Hospital.StartDate > '1995-12-31')
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+--------------
+SELECT * FROM ViewOne
+--------------
+
++------------------+-----------------+----------------+--------------+
+| PatientFirstName | PatientLastName | DoctorLastName | HospitalName |
++------------------+-----------------+----------------+--------------+
+| Bill             | Gellar          | Shabado        | St. Joseph   |
+| Colleen          | Gellar          | Shabado        | St. Joseph   |
+| Scotty           | Bing            | Shabado        | St. Joseph   |
++------------------+-----------------+----------------+--------------+
+3 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM Doctor
+--------------
+
++------------+-----------+------------+-------------+--------------+-----------------+
+| LicenseNum | FirstName | LastName   | LicenseDate | Specialty    | WorkingHospital |
++------------+-----------+------------+-------------+--------------+-----------------+
+| GD56       | Joey      | Shabado    | 1960-06-24  | Podiatrist   | BBC             |
+| HT45       | Ross      | Clooney    | 1987-06-20  | Surgeon      | DDE             |
+| JK78       | Mandy     | Webster    | 1990-08-08  | Surgeon      | BBC             |
+| LI99       | Elizabeth | Blackwell  | 1951-04-17  | Physician    | ABC             |
+| RD34       | Bernie    | Kavorikian | 1980-09-09  | Urologist    | BBC             |
+| SE66       | Colleen   | Aziz       | 1989-08-24  | Surgeon      | ABC             |
+| YT67       | Ben       | Spock      | 1955-02-20  | Pediatrician | DDE             |
++------------+-----------+------------+-------------+--------------+-----------------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM PatientAssignment
+--------------
+
++-----------+----------+
+| PatientID | DoctorID |
++-----------+----------+
+| 110112113 | GD56     |
+| 333444555 | GD56     |
+| 667766777 | GD56     |
+| 111222111 | HT45     |
+| 111222333 | HT45     |
+| 444555666 | HT45     |
+| 667766777 | HT45     |
+| 111222333 | JK78     |
+| 444555666 | JK78     |
+| 667766777 | JK78     |
+| 764329777 | RD34     |
+| 111222333 | SE66     |
++-----------+----------+
+12 rows in set (0.00 sec)
+
+--------------
+DELETE FROM Doctor
+WHERE Doctor.LastName = 'Clooney'
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+SELECT * FROM Doctor
+--------------
+
++------------+-----------+------------+-------------+--------------+-----------------+
+| LicenseNum | FirstName | LastName   | LicenseDate | Specialty    | WorkingHospital |
++------------+-----------+------------+-------------+--------------+-----------------+
+| GD56       | Joey      | Shabado    | 1960-06-24  | Podiatrist   | BBC             |
+| JK78       | Mandy     | Webster    | 1990-08-08  | Surgeon      | BBC             |
+| LI99       | Elizabeth | Blackwell  | 1951-04-17  | Physician    | ABC             |
+| RD34       | Bernie    | Kavorikian | 1980-09-09  | Urologist    | BBC             |
+| SE66       | Colleen   | Aziz       | 1989-08-24  | Surgeon      | ABC             |
+| YT67       | Ben       | Spock      | 1955-02-20  | Pediatrician | DDE             |
++------------+-----------+------------+-------------+--------------+-----------------+
+6 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM PatientAssignment
+--------------
+
++-----------+----------+
+| PatientID | DoctorID |
++-----------+----------+
+| 110112113 | GD56     |
+| 333444555 | GD56     |
+| 667766777 | GD56     |
+| 111222333 | JK78     |
+| 444555666 | JK78     |
+| 667766777 | JK78     |
+| 764329777 | RD34     |
+| 111222333 | SE66     |
++-----------+----------+
+8 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM Doctor
+--------------
+
++------------+-----------+------------+-------------+--------------+-----------------+
+| LicenseNum | FirstName | LastName   | LicenseDate | Specialty    | WorkingHospital |
++------------+-----------+------------+-------------+--------------+-----------------+
+| GD56       | Joey      | Shabado    | 1960-06-24  | Podiatrist   | BBC             |
+| JK78       | Mandy     | Webster    | 1990-08-08  | Surgeon      | BBC             |
+| LI99       | Elizabeth | Blackwell  | 1951-04-17  | Physician    | ABC             |
+| RD34       | Bernie    | Kavorikian | 1980-09-09  | Urologist    | BBC             |
+| SE66       | Colleen   | Aziz       | 1989-08-24  | Surgeon      | ABC             |
+| YT67       | Ben       | Spock      | 1955-02-20  | Pediatrician | DDE             |
++------------+-----------+------------+-------------+--------------+-----------------+
+6 rows in set (0.00 sec)
+
+ERROR 1451 (23000) at line 53: Cannot delete or update a parent row: a foreign key constraint fails (`ssrini3assign2db`.`Hospital`, CONSTRAINT `Hospital_ibfk_1` FOREIGN KEY (`HeadDoctor`) REFERENCES `Doctor` (`LicenseNum`))
+--------------
+DELETE FROM Doctor
+WHERE Doctor.Specialty = 'Surgeon'
+--------------
+
+Bye
