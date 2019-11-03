@@ -1,36 +1,36 @@
 Warning: Using a password on the command line interface can be insecure.
 --------------
-SELECT LastName 
+SELECT LastName AS PatientLastName
 FROM Patient
 --------------
 
-+------------+
-| LastName   |
-+------------+
-| Gellar     |
-| Brown      |
-| Green      |
-| Gellar     |
-| Gellar     |
-| Bing       |
-| Srinivasan |
-+------------+
++-----------------+
+| PatientLastName |
++-----------------+
+| Gellar          |
+| Brown           |
+| Green           |
+| Gellar          |
+| Gellar          |
+| Bing            |
+| Srinivasan      |
++-----------------+
 7 rows in set (0.00 sec)
 
 --------------
-SELECT DISTINCT LastName 
+SELECT DISTINCT LastName AS PatientLastName
 FROM Patient
 --------------
 
-+------------+
-| LastName   |
-+------------+
-| Gellar     |
-| Brown      |
-| Green      |
-| Bing       |
-| Srinivasan |
-+------------+
++-----------------+
+| PatientLastName |
++-----------------+
+| Gellar          |
+| Brown           |
+| Green           |
+| Bing            |
+| Srinivasan      |
++-----------------+
 5 rows in set (0.00 sec)
 
 --------------
@@ -66,32 +66,40 @@ WHERE BedCount > 1500
 1 row in set (0.00 sec)
 
 --------------
-SELECT Doctor.LastName, Doctor.FirstName 
+SELECT Doctor.LastName AS DoctorLastName, Doctor.FirstName AS DoctorFirstName
 FROM Doctor
 INNER JOIN Hospital
 ON Doctor.WorkingHospital = Hospital.HospitalCode
 WHERE Hospital.HospitalName = 'St. Joseph'
 --------------
 
-+------------+-----------+
-| LastName   | FirstName |
-+------------+-----------+
-| Shabado    | Joey      |
-| Webster    | Mandy     |
-| Kavorikian | Bernie    |
-+------------+-----------+
++----------------+-----------------+
+| DoctorLastName | DoctorFirstName |
++----------------+-----------------+
+| Shabado        | Joey            |
+| Webster        | Mandy           |
+| Kavorikian     | Bernie          |
++----------------+-----------------+
 3 rows in set (0.00 sec)
 
 --------------
-SELECT FirstName, LastName
+SELECT FirstName AS PatientFirstName, LastName AS PatientLastName
 FROM Patient
-WHERE Patient.LastName = '[G]%'
+WHERE Patient.LastName LIKE "G%"
 --------------
 
-Empty set (0.00 sec)
++------------------+-----------------+
+| PatientFirstName | PatientLastName |
++------------------+-----------------+
+| Bill             | Gellar          |
+| Jon              | Green           |
+| Colleen          | Gellar          |
+| Sean             | Gellar          |
++------------------+-----------------+
+4 rows in set (0.00 sec)
 
 --------------
-SELECT Patient.FirstName, Patient.LastName
+SELECT Patient.FirstName AS PatientFirstName, Patient.LastName AS PatientLastName
 FROM PatientAssignment AS PD
 INNER JOIN Doctor
 ON PD.DoctorID = Doctor.LicenseNum
@@ -100,30 +108,30 @@ ON PD.PatientID = Patient.OHIPNum
 WHERE Doctor.LastName = 'Clooney'
 --------------
 
-+-----------+----------+
-| FirstName | LastName |
-+-----------+----------+
-| Suzi      | Brown    |
-| Jon       | Green    |
-| Sean      | Gellar   |
-| Scotty    | Bing     |
-+-----------+----------+
++------------------+-----------------+
+| PatientFirstName | PatientLastName |
++------------------+-----------------+
+| Suzi             | Brown           |
+| Jon              | Green           |
+| Sean             | Gellar          |
+| Scotty           | Bing            |
++------------------+-----------------+
 4 rows in set (0.00 sec)
 
 --------------
-SELECT Hospital.HospitalName, Hospital.City, Doctor.LastName
+SELECT Hospital.HospitalName, Hospital.City, Doctor.LastName AS DoctorLastName
 FROM Hospital
 INNER JOIN Doctor
 ON Hospital.HeadDoctor = Doctor.LicenseNum
 --------------
 
-+--------------+----------+----------+
-| HospitalName | City     | LastName |
-+--------------+----------+----------+
-| Victoria     | London   | Aziz     |
-| St. Joseph   | London   | Shabado  |
-| Victoria     | Victoria | Spock    |
-+--------------+----------+----------+
++--------------+----------+----------------+
+| HospitalName | City     | DoctorLastName |
++--------------+----------+----------------+
+| Victoria     | London   | Aziz           |
+| St. Joseph   | London   | Shabado        |
+| Victoria     | Victoria | Spock          |
++--------------+----------+----------------+
 3 rows in set (0.00 sec)
 
 --------------
@@ -139,7 +147,7 @@ FROM Hospital
 1 row in set (0.00 sec)
 
 --------------
-SELECT Patient.FirstName, Doctor.FirstName
+SELECT Patient.FirstName AS PatientFirstName, Doctor.FirstName AS DoctorFirstName
 FROM PatientAssignment AS PD
 INNER JOIN Doctor
 ON PD.DoctorID = Doctor.LicenseNum
@@ -151,34 +159,34 @@ WHERE Doctor.LicenseNum IN (SELECT Doctor.LicenseNum
                             ON Doctor.LicenseNum = Hospital.HeadDoctor)
 --------------
 
-+-----------+-----------+
-| FirstName | FirstName |
-+-----------+-----------+
-| Bill      | Joey      |
-| Colleen   | Joey      |
-| Scotty    | Joey      |
-| Jon       | Colleen   |
-+-----------+-----------+
++------------------+-----------------+
+| PatientFirstName | DoctorFirstName |
++------------------+-----------------+
+| Bill             | Joey            |
+| Colleen          | Joey            |
+| Scotty           | Joey            |
+| Jon              | Colleen         |
++------------------+-----------------+
 4 rows in set (0.00 sec)
 
 --------------
-SELECT Doctor.LastName, Doctor.FirstName
+SELECT Doctor.LastName AS DoctorLastName, Doctor.FirstName AS DoctorFirstName
 FROM Doctor
 INNER JOIN Hospital
 ON Doctor.WorkingHospital = Hospital.HospitalCode
 WHERE (Doctor.Specialty = 'Surgeon' AND Hospital.HospitalName = 'Victoria')
 --------------
 
-+----------+-----------+
-| LastName | FirstName |
-+----------+-----------+
-| Clooney  | Ross      |
-| Aziz     | Colleen   |
-+----------+-----------+
++----------------+-----------------+
+| DoctorLastName | DoctorFirstName |
++----------------+-----------------+
+| Clooney        | Ross            |
+| Aziz           | Colleen         |
++----------------+-----------------+
 2 rows in set (0.00 sec)
 
 --------------
-SELECT Doctor.FirstName
+SELECT Doctor.FirstName AS DoctorFirstName
 FROM Doctor
 WHERE Doctor.LicenseNum NOT IN (SELECT Doctor.LicenseNum
                                 FROM Doctor
@@ -186,16 +194,16 @@ WHERE Doctor.LicenseNum NOT IN (SELECT Doctor.LicenseNum
                                 ON PD.DoctorID = Doctor.LicenseNum)
 --------------
 
-+-----------+
-| FirstName |
-+-----------+
-| Elizabeth |
-| Ben       |
-+-----------+
++-----------------+
+| DoctorFirstName |
++-----------------+
+| Elizabeth       |
+| Ben             |
++-----------------+
 2 rows in set (0.00 sec)
 
 --------------
-SELECT Doctor.LastName, Doctor.FirstName
+SELECT Doctor.LastName AS DoctorLastName, Doctor.FirstName AS DoctorFirstName
 FROM Doctor
 WHERE Doctor.LicenseNum IN (SELECT DoctorID
                             FROM PatientAssignment AS PD
@@ -203,13 +211,13 @@ WHERE Doctor.LicenseNum IN (SELECT DoctorID
                             HAVING COUNT(*) > 1)
 --------------
 
-+----------+-----------+
-| LastName | FirstName |
-+----------+-----------+
-| Shabado  | Joey      |
-| Clooney  | Ross      |
-| Webster  | Mandy     |
-+----------+-----------+
++----------------+-----------------+
+| DoctorLastName | DoctorFirstName |
++----------------+-----------------+
+| Shabado        | Joey            |
+| Clooney        | Ross            |
+| Webster        | Mandy           |
++----------------+-----------------+
 3 rows in set (0.00 sec)
 
 Bye
