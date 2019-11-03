@@ -31,6 +31,7 @@ INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
 VALUES ('JK78', 'Mandy', 'Webster', '1990-08-08', 'Surgeon');
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
 VALUES ('SE66', 'Colleen', 'Aziz', '1989-08-24', 'Surgeon');
+-- adding the additional doctor of choice
 INSERT INTO Doctor (LicenseNum, FirstName, LastName, LicenseDate, Specialty)
 VALUES ('LI99', 'Elizabeth', 'Blackwell', '1951-04-17', 'Physician');
 

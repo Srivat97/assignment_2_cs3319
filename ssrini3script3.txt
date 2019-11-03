@@ -1,11 +1,11 @@
 USE ssrini3assign2db;
 
 -- Query 1
-SELECT LastName 
+SELECT LastName AS PatientLastName
 FROM Patient;
 
 -- Query 2
-SELECT DISTINCT LastName 
+SELECT DISTINCT LastName AS PatientLastName
 FROM Patient;
 
 -- Query 3
@@ -19,19 +19,19 @@ FROM Hospital
 WHERE BedCount > 1500;
 
 -- Query 5
-SELECT Doctor.LastName, Doctor.FirstName 
+SELECT Doctor.LastName AS DoctorLastName, Doctor.FirstName AS DoctorFirstName
 FROM Doctor
 INNER JOIN Hospital
 ON Doctor.WorkingHospital = Hospital.HospitalCode
 WHERE Hospital.HospitalName = 'St. Joseph';
 
 -- Query 6
-SELECT FirstName, LastName
+SELECT FirstName AS PatientFirstName, LastName AS PatientLastName
 FROM Patient
-WHERE Patient.LastName = '[G]%';
+WHERE Patient.LastName LIKE "G%";
 
 -- Query 7
-SELECT Patient.FirstName, Patient.LastName
+SELECT Patient.FirstName AS PatientFirstName, Patient.LastName AS PatientLastName
 FROM PatientAssignment AS PD
 INNER JOIN Doctor
 ON PD.DoctorID = Doctor.LicenseNum
@@ -40,7 +40,7 @@ ON PD.PatientID = Patient.OHIPNum
 WHERE Doctor.LastName = 'Clooney';
 
 -- Query 8
-SELECT Hospital.HospitalName, Hospital.City, Doctor.LastName
+SELECT Hospital.HospitalName, Hospital.City, Doctor.LastName AS DoctorLastName
 FROM Hospital
 INNER JOIN Doctor
 ON Hospital.HeadDoctor = Doctor.LicenseNum;
@@ -50,7 +50,7 @@ SELECT SUM(BedCount) AS "Total Number of Beds For All Hospitals"
 FROM Hospital;
 
 -- Query 10
-SELECT Patient.FirstName, Doctor.FirstName
+SELECT Patient.FirstName AS PatientFirstName, Doctor.FirstName AS DoctorFirstName
 FROM PatientAssignment AS PD
 INNER JOIN Doctor
 ON PD.DoctorID = Doctor.LicenseNum
@@ -62,14 +62,14 @@ WHERE Doctor.LicenseNum IN (SELECT Doctor.LicenseNum
                             ON Doctor.LicenseNum = Hospital.HeadDoctor);
 
 -- Query 11
-SELECT Doctor.LastName, Doctor.FirstName
+SELECT Doctor.LastName AS DoctorLastName, Doctor.FirstName AS DoctorFirstName
 FROM Doctor
 INNER JOIN Hospital
 ON Doctor.WorkingHospital = Hospital.HospitalCode
 WHERE (Doctor.Specialty = 'Surgeon' AND Hospital.HospitalName = 'Victoria');
 
 -- Query 12
-SELECT Doctor.FirstName
+SELECT Doctor.FirstName AS DoctorFirstName
 FROM Doctor
 WHERE Doctor.LicenseNum NOT IN (SELECT Doctor.LicenseNum
                                 FROM Doctor
@@ -77,7 +77,7 @@ WHERE Doctor.LicenseNum NOT IN (SELECT Doctor.LicenseNum
                                 ON PD.DoctorID = Doctor.LicenseNum);
 
 -- Query 13
-SELECT Doctor.LastName, Doctor.FirstName
+SELECT Doctor.LastName AS DoctorLastName, Doctor.FirstName AS DoctorFirstName
 FROM Doctor
 WHERE Doctor.LicenseNum IN (SELECT DoctorID
                             FROM PatientAssignment AS PD
