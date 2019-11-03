@@ -43,6 +43,8 @@ WHERE Doctor.LastName = 'Clooney';
 
 SELECT * FROM Doctor;
 
+SELECY * FROM PatientAssignment;
+
 -- the following deletion will not work because Collen Aziz who is a surgeon
 -- is also a ead doctor of victoria hospital, so is referenced in the hospital table.
 -- Due to the reference, the doctors cannot be deleted. Their refrerences need to be deleted first.
