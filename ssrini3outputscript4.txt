@@ -1,4 +1,8 @@
 Warning: Using a password on the command line interface can be insecure.
+
+-- the following error occurs because a few doctors who were licensed before
+-- 1965 are also head doctors of hospitals, so are referenced in the hospital table.
+-- Due to the reference, the doctors cannot be deleted. Their refrerences need to be deleted first.
 ERROR 1451 (23000) at line 7: Cannot delete or update a parent row: a foreign key constraint fails (`ssrini3assign2db`.`Hospital`, CONSTRAINT `Hospital_ibfk_1` FOREIGN KEY (`HeadDoctor`) REFERENCES `Doctor` (`LicenseNum`))
 --------------
 DELETE FROM Doctor
@@ -136,6 +140,9 @@ SELECT * FROM Doctor
 +------------+-----------+------------+-------------+--------------+-----------------+
 6 rows in set (0.00 sec)
 
+-- the following error occurs because Collen Aziz who is a surgeon
+-- is also a ead doctor of victoria hospital, so is referenced in the hospital table.
+-- Due to the reference, the doctors cannot be deleted. Their refrerences need to be deleted first.
 ERROR 1451 (23000) at line 53: Cannot delete or update a parent row: a foreign key constraint fails (`ssrini3assign2db`.`Hospital`, CONSTRAINT `Hospital_ibfk_1` FOREIGN KEY (`HeadDoctor`) REFERENCES `Doctor` (`LicenseNum`))
 --------------
 DELETE FROM Doctor
